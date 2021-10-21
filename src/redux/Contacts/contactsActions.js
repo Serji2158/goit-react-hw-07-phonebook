@@ -1,4 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
+import { SETERROR } from "./contactTypes";
 
 export const addNewContact = createAction(
   "contactsActions/addContact",
@@ -34,3 +35,5 @@ export const toggleCompletedError = createAction(
 );
 
 export const changeFilter = createAction("Contacts/changeFilter");
+
+export const setError = createAction(SETERROR);

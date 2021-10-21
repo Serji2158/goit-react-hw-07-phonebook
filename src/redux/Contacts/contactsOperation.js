@@ -9,9 +9,6 @@ import {
   deleteContactError,
   getContactsRequest,
   getContactsSuccess,
-  getContactsError,
-  toggleCompletedError,
-  changeFilter,
 } from "./contactsActions";
 
 export const addContact = (contact) => (dispatch) => {
@@ -37,7 +34,14 @@ export const getContacts = () => async (dispatch) => {
 
   axios
     .get(BASE_URL + `/contacts.json`)
-    .then(({ data }) => dispatch(getContactsSuccess(data)))
+    .then(({ data }) => {
+      if (data) {
+        return Object.keys(data).map((key) => ({ id: key, ...data[key] }));
+      } else {
+        return [];
+      }
+    })
+    .then((contacts) => dispatch(getContactsSuccess(contacts)))
     .catch((error) => dispatch(getContactsSuccess(error)));
 
   // try {

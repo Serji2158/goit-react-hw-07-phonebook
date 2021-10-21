@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-// import PropTypes from "prop-types";
 import s from "./contactForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/Contacts/contactsOperation";
+import {
+  contactErrorSelector,
+  getContactItems,
+} from "../../redux/Contacts/contactsSelectors";
+import { setError } from "../../redux/Contacts/contactsActions";
 
 const ContactForm = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items);
+  const contacts = useSelector(getContactItems);
+  const error = useSelector(contactErrorSelector);
+
+  const resetError = () => error && dispatch(setError(""));
 
   const onHandleChange = (e) => {
+    resetError();
     const { value, name } = e.target;
     name === "name" && setName(value);
     name === "number" && setNumber(value);

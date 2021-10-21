@@ -1,11 +1,6 @@
 import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
-// import {
-//   addNewContact,
-//   deleteContact,
-//   getContacts,
-//   setFilter,
-// } from "./contactsActions";
+import { setError } from "./contactsActions";
 import {
   addContactRequest,
   addContactSuccess,
@@ -42,7 +37,9 @@ const loadingReducer = createReducer(false, {
   [deleteContactError]: () => false,
 });
 
-const errorReducer = createReducer(null, {});
+const errorReducer = createReducer("", {
+  [setError]: (_, action) => action.payload,
+});
 
 export const contactsItemReducer = combineReducers({
   items: itemsReducer,
